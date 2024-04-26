@@ -33,6 +33,11 @@ async function run() {
             const result = await touristsSpotCollection.insertOne(newTouristsSpot);
             res.send(result)
         })
+        app.get("/all-tourists-spot", async (req, res) => {
+            const result = touristsSpotCollection.find();
+            const allTouristsSpotData = await result.toArray();
+            res.send(allTouristsSpotData)
+        })
 
         // Send a ping to confirm a successful connection
         // await client.db("admin").command({ ping: 1 });
