@@ -51,6 +51,26 @@ async function run() {
             const individualTouristsSpot = await result.toArray()
             res.send(individualTouristsSpot)
         })
+        app.put("/update/:id", async (req, res) => {
+            const id = req.params.id;
+            const newData = req.body;
+            const filter = { _id: new ObjectId(id) };
+            const updateData = {
+                $set: {
+                    image_url: newData.image_url,
+                    country_Name: newData.country_Name,
+                    average_cost: newData.average_cost,
+                    location: newData.location,
+                    seasonality: newData.seasonality,
+                    short_description: newData.short_description,
+                    total_visitors_per_year: newData.total_visitors_per_year,
+                    tourists_spot_name: newData.tourists_spot_name,
+                    travel_time: newData.travel_time,
+                },
+            };
+            const result = await touristsSpotCollection.updateOne(filter, updateData);
+            res.send(result)
+        })
 
         // Send a ping to confirm a successful connection
         // await client.db("admin").command({ ping: 1 });
@@ -63,7 +83,7 @@ async function run() {
 run().catch(console.dir);
 
 
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
     res.send("Tourism management server is running")
 });
 app.listen(port, () => {
