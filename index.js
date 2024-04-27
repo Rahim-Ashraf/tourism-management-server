@@ -71,6 +71,21 @@ async function run() {
             const result = await touristsSpotCollection.updateOne(filter, updateData);
             res.send(result)
         })
+        app.delete("/delete/:id", async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await touristsSpotCollection.deleteOne(query);
+            res.send(result)
+        })
+
+        // country collection
+        const touristsCountryCollection = touristsDB.collection("touristCountries");
+        app.get("/tourists-countries", async (req, res) => {
+            const cursor = touristsCountryCollection.find();
+            const result = await cursor.toArray();
+            res.send(result);
+        })
+
 
         // Send a ping to confirm a successful connection
         // await client.db("admin").command({ ping: 1 });
