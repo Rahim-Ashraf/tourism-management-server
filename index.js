@@ -58,7 +58,7 @@ async function run() {
             const updateData = {
                 $set: {
                     image_url: newData.image_url,
-                    country_Name: newData.country_Name,
+                    country_name: newData.country_name,
                     average_cost: newData.average_cost,
                     location: newData.location,
                     seasonality: newData.seasonality,
@@ -84,6 +84,13 @@ async function run() {
             const cursor = touristsCountryCollection.find();
             const result = await cursor.toArray();
             res.send(result);
+        })
+        app.get("/specific-country-spots/:name",async(req,res)=>{
+            const name = req.params.name;
+            const query= {country_name: name};
+            const countrySpots= touristsSpotCollection.find(query);
+            const result= await countrySpots.toArray();
+            res.send(result)
         })
 
 
