@@ -85,12 +85,17 @@ async function run() {
             const result = await cursor.toArray();
             res.send(result);
         })
-        app.get("/specific-country-spots/:name",async(req,res)=>{
+        app.get("/specific-country-spots/:name", async (req, res) => {
             const name = req.params.name;
-            const query= {country_name: name};
-            const countrySpots= touristsSpotCollection.find(query);
-            const result= await countrySpots.toArray();
+            const query = { country_name: name };
+            const countrySpots = touristsSpotCollection.find(query);
+            const result = await countrySpots.toArray();
             res.send(result)
+        })
+        app.get("/tourists-spots", async (req, res) => {
+            const result = touristsSpotCollection.find().limit(6);
+            const touristsSpots = await result.toArray();
+            res.send(touristsSpots);
         })
 
 
